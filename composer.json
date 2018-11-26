@@ -1,0 +1,30 @@
+{
+    "name": "tsaiyihua/laravel-ecpay",
+    "description": "ecpay library for laravel",
+    "type": "library",
+    "keywords": ["payment", "ecpay", "laravel"],
+    "require": {
+        "php": ">=7.0",
+        "laravel/framework": "~5.7.0",
+        "guzzlehttp/guzzle": "~6.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Yihua Tsai",
+            "email": "tsaiyihua@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "TsaiYiHua\\ECPay\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "TsaiYiHua\\ECPay\\ECPayServiceProvider"
+            ]
+        }
+    }
+}
