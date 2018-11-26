@@ -6,7 +6,7 @@ Laravel ECPay 為串接綠界的非官方套件
  - Laravel >= 5.7
 
 ## 安裝
-```composer install tsaiyihua/laravel-ecpay```
+```composer require tsaiyihua/laravel-ecpay```
 
 ## 環境設定
 ```php artisan vendor:publish --tag=ecpay```  
