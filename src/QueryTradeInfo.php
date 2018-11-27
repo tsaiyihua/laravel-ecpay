@@ -12,6 +12,9 @@ class QueryTradeInfo
     protected $apiUrl;
     protected $postData;
     protected $merchantId;
+    protected $hashKey;
+    protected $hashIv;
+    protected $encryptType='sha256';
 
     public function __construct()
     {
@@ -23,6 +26,8 @@ class QueryTradeInfo
         $this->postData = new Collection();
 
         $this->merchantId = config('ecpay.MerchantId');
+        $this->hashKey = config('ecpay.HashKey');
+        $this->hashIv = config('ecpay.HashIV');
     }
 
     public function getData($data)

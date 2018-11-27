@@ -15,8 +15,11 @@ Laravel ECPay 為串接綠界的非官方套件
 ECPAY_MERCHANT_ID=
 ECPAY_HASH_KEY=
 ECPAY_HASH_IV=
+ECPAY_INVOICE_HASH_KEY=
+ECPAY_INVOICE_HASH_IV=
 ```
-測試用的參數值請參考介接文件第11頁。
+ - 金流測試用的參數值請參考介接文件 ecpay_gw_p110.pdf 第11頁。
+ - 查詢發票用的參數請請參考介接文件 ecpay_004.pdf 第6頁。
 
 ## 用法
 ### 基本用法
@@ -51,7 +54,7 @@ ECPAY_HASH_IV=
 ```
 ### 定期定額扣款
  - 加上 withPeriodAmount($periodAmt)
-範例  
+##### 範例  
     承上，加上參數，帶入 withPeriodAmount 即可
 ```php
 ...
@@ -69,7 +72,7 @@ ECPAY_HASH_IV=
  - 開立發票時，產品內容必須要符合即定格式傳送，不能只帶 ItemName 及 TotalAmount
  - 開立發票時，特店必須要有會員系統並傳送會員相關資料
  - 測試開立發票時，MerchantID 請設 2000132
-範例  
+##### 範例  
 ```php
 ...
     public function __construct(Checkout $checkout)
@@ -113,7 +116,21 @@ ECPAY_HASH_IV=
     public function queryInfo()
     {
         $formData = ['orderId'=>'O154320382117474878'];
-        return $this->queryTradeInfo->getData($formData)->send();
+        return $this->queryTradeInfo->getData($formData)->query();
+    }
+```
+### 查詢發票
+```php
+    public function __construct(Checkout $checkout,  QueryInvoice $queryInvoice)
+    {
+        $this->checkout = $checkout;
+        $this->queryInvoice = $queryInvoice;
+    }
+    ...
+    public function queryInvInfo()
+    {
+        $formData = ['orderId'=>'O154320382117474878'];
+        return $this->queryInvoice->getData($formData)->query();
     }
 ```
 

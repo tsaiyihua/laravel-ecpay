@@ -5,8 +5,7 @@
     "keywords": ["payment", "ecpay", "laravel"],
     "require": {
         "php": ">=7.0",
-        "laravel/framework": "~5.7.0",
-        "guzzlehttp/guzzle": "~6.0"
+        "laravel/framework": "~5.7.0"
     },
     "license": "MIT",
     "authors": [

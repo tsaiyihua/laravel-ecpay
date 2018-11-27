@@ -1,6 +1,7 @@
 <?php
 namespace TsaiYiHua\ECPay\Services;
 
+use TsaiYiHua\ECPay\Checkout;
 use TsaiYiHua\ECPay\Exceptions\ECPayException;
 
 class StringService
@@ -27,18 +28,24 @@ class StringService
 
     /**
      * @param array $data
+     * @param array $hashData
      * @return string
      */
-    static public function checkMacValueGenerator($data)
+    static public function checkMacValueGenerator($data, $hashData=[])
     {
+        if (empty($hashData)) {
+            $hashData['key'] = config('ecpay.HashKey');
+            $hashData['iv'] = config('ecpay.HashIV');
+            $hashData['type'] = 'sha256';
+        }
         uksort($data, array(self::class, 'merchantSort'));
-        $checkCodeStr = 'HashKey='.config('ecpay.HashKey');
+        $checkCodeStr = 'HashKey='.$hashData['key'];
         foreach($data as $key=>$val) {
             $checkCodeStr .= '&'.$key.'='.$val;
         }
-        $checkCodeStr .= '&HashIV='.config('ecpay.HashIV');
+        $checkCodeStr .= '&HashIV='.$hashData['iv'];
         $checkCodeStr = self::replaceSymbol(urlencode($checkCodeStr));
-        return strtoupper(hash('sha256', strtolower($checkCodeStr)));
+        return strtoupper(hash($hashData['type'], strtolower($checkCodeStr)));
     }
 
     /**

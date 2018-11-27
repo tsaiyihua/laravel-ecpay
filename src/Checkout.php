@@ -18,6 +18,9 @@ class Checkout
     protected $postData;
     protected $platform;
     protected $merchantId;
+    protected $hashKey;
+    protected $hashIv;
+    protected $encryptType='sha256';
     protected $notifyUrl;
 
     protected $itemValidation;
@@ -32,6 +35,8 @@ class Checkout
         $this->postData = new Collection();
 
         $this->merchantId = config('ecpay.MerchantId');
+        $this->hashKey = config('ecpay.HashKey');
+        $this->hashIv = config('ecpay.HashIV');
         $this->notifyUrl = route('ecpay.notify');
 
         $this->itemValidation = $itemValidation;
