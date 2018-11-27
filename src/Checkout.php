@@ -88,7 +88,7 @@ class Checkout
         $optionParams = [
             'StoreId', 'ClientBackURL', 'ItemURL', 'Remark', 'ChooseSubPayment', 'OrderResultURL',
             'NeedExtraPaidInfo', 'IgnorePayment', 'PlatformID', 'InvoiceMark', 'CustomField1',
-            'CustomField2', 'CustomField3', 'CustomField4'
+            'CustomField2', 'CustomField3', 'CustomField4', 'ExpireDate', 'PaymentInfoURL', 'ClientRedirectURL'
         ];
         foreach($optionParams as $param) {
             if (isset($data[$param]) && !empty($data[$param])) {

@@ -42,7 +42,10 @@ class PaymentValidation
             'CustomField1' => 'max:50',
             'CustomField2' => 'max:50',
             'CustomField3' => 'max:50',
-            'CustomField4' => 'max:50'
+            'CustomField4' => 'max:50',
+            'ExpireDate' => 'int|min:1|max:60',
+            'PaymentInfoURL' => 'url|max:200',
+            'ClientRedirectURL' => 'url|max:200'
         ]);
 
         return $validator;
