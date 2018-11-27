@@ -1,16 +1,7 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: yihua
- * Date: 2018/11/26
- * Time: 下午 6:10
- */
-
 namespace TsaiYiHua\ECPay;
 
-
 use Carbon\Carbon;
-use GuzzleHttp\Client;
 use Illuminate\Support\Collection;
 
 class QueryInvoice
@@ -26,7 +17,7 @@ class QueryInvoice
 
     protected $client;
 
-    public function __construct(Client $client)
+    public function __construct()
     {
         if (config('app.env') == 'production') {
             $this->apiUrl = 'https://einvoice.ecpay.com.tw/Query/Issue';
@@ -38,16 +29,13 @@ class QueryInvoice
         $this->merchantId = config('ecpay.MerchantId');
         $this->hashKey = config('ecpay.InvoiceHashKey');
         $this->hashIv = config('ecpay.InvoiceHashIV');
-
-        $this->client = $client;
     }
 
-    public function getData($data)
+    public function getData($orderId)
     {
         $this->postData->put('TimeStamp', Carbon::now()->timestamp);
         $this->postData->put('MerchantID', $this->merchantId);
-        $this->postData->put('RelateNumber', $data['orderId']);
-        /** @todo use guzzle to get info from ecpay */
+        $this->postData->put('RelateNumber', $orderId);
         return $this;
     }
 }

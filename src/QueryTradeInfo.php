@@ -1,7 +1,6 @@
 <?php
 namespace TsaiYiHua\ECPay;
 
-
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
@@ -30,10 +29,10 @@ class QueryTradeInfo
         $this->hashIv = config('ecpay.HashIV');
     }
 
-    public function getData($data)
+    public function getData($orderId)
     {
         $this->postData->put('MerchantID', $this->merchantId);
-        $this->postData->put('MerchantTradeNo', $data['orderId']);
+        $this->postData->put('MerchantTradeNo', $orderId);
         $this->postData->put('TimeStamp', Carbon::now()->timestamp);
         return $this;
     }
