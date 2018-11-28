@@ -166,6 +166,7 @@ ECPAY_INVOICE_HASH_IV=
 ```
  - 已知問題
    - 當資料有 CustomerEmail 或 CustomerAddr 時，串接API都會傳回 CheckMacValue 錯誤。
+   - 當 CustomerName 中間有空格(space)時，就會傳回 CheckMacValue 錯誤。
    - 購買的商品單位用中文的話，只要一個字在 urlencode 後便會超過6個字元，然後噴錯。
 
 ### 限制
@@ -186,3 +187,7 @@ ECPAY_INVOICE_HASH_IV=
    - V 2.2.2
    - 文件編號 gw_i100
    - 文件位置 documents/ecpay_004.pdf
+ - 綠界科技全方位金流介接技術文件 (2018-11-05)
+   - V 5.1.22
+   - 文件編號 gw_p100
+   - 文件位置 documents/ecpay_011.pdf
