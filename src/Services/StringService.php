@@ -38,6 +38,11 @@ class StringService
             $hashData['iv'] = config('ecpay.HashIV');
             $hashData['type'] = 'sha256';
         }
+        if (isset($hashData['ignore'])) {
+            foreach($hashData['ignore'] as $field) {
+                unset($data[$field]);
+            }
+        }
         uksort($data, array(self::class, 'merchantSort'));
         $checkCodeStr = 'HashKey='.$hashData['key'];
         foreach($data as $key=>$val) {

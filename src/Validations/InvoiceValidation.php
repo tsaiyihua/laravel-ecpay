@@ -33,7 +33,7 @@ class InvoiceValidation
             'CustomerIdentifier' => 'int|max:8',
             'CustomerName' => 'required_if:Print,1|max:60',
             'CustomerAddr' => 'required_if:Print,1|max:200',
-            'CustomerPhone' => 'required_if:CustomerEmail,null|int|max:20',
+            'CustomerPhone' => 'required_if:CustomerEmail,null|max:20',
             'CustomerEmail' => 'required_if:CustomerPhone,null|max:200',
             'ClearanceMark' => 'in:'.implode(',', ECPayClearanceMark::getConstantValues()->toArray()),
             'TaxType' => 'in:'.implode(',', ECPayTaxType::getConstantValues()->toArray()),

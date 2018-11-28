@@ -72,6 +72,9 @@ trait ECPayTrait
             'iv' => $this->hashIv,
             'type' => $this->encryptType
         ];
+        if (isset($this->checkMacValueIgnoreFields)) {
+            $hashData['ignore'] = $this->checkMacValueIgnoreFields;
+        }
         /** @var Collection $this->postData */
         $checkValue = StringService::checkMacValueGenerator($this->postData->toArray(), $hashData);
         /** @var Collection $this->postData */
@@ -81,14 +84,20 @@ trait ECPayTrait
     /**
      * @param $response
      * @return Collection
+     * @throws ECPayException
      */
     protected function parseResponse($response)
     {
         $responseCollection = new Collection();
-        $buf = explode('&', $response);
-        foreach($buf as $val) {
-            $buf2 = explode('=', $val);
-            $responseCollection->put($buf2[0], $buf2[1]);
+        preg_match_all('/([^&]*=[^&]*)/', $response, $match);
+        if (!empty($match[0])) {
+            foreach($match[0] as $paramValue) {
+                $param = strstr($paramValue, '=', true);
+                $value = substr(strstr($paramValue,'='), 1, 255);
+                $responseCollection->put($param, $value);
+            }
+        } else {
+            throw new ECPayException($response);
         }
         return $responseCollection;
     }
