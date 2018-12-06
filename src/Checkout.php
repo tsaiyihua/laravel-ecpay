@@ -103,7 +103,7 @@ class Checkout
     public function withInvoice($invData)
     {
         $invPostData = new InvoicePostCollection;
-        $invPostData->setData($invData)->setPostData();
+        $invPostData->setData($invData)->setPostDataForCheckout();
         $this->postData = collect(array_merge($this->postData->toArray(), $invPostData->toArray()));
         return $this;
     }
