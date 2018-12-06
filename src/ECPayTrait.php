@@ -1,7 +1,6 @@
 <?php
 namespace TsaiYiHua\ECPay;
 
-use GuzzleHttp\Client;
 use Illuminate\Support\Collection;
 use TsaiYiHua\ECPay\Exceptions\ECPayException;
 use TsaiYiHua\ECPay\Services\StringService;
@@ -15,10 +14,6 @@ trait ECPayTrait
      */
     public function send()
     {
-        /** @var Collection $this->postData */
-        $this->postData = $this->postData->filter(function($data){
-            return !($data==='');
-        });
         $this->setCheckCodeValue();
         $data = [
             'apiUrl' => $this->apiUrl,
@@ -34,10 +29,6 @@ trait ECPayTrait
      */
     public function query()
     {
-        /** @var Collection $this->postData */
-        $this->postData = $this->postData->filter(function($data){
-            return !($data==='');
-        });
         $this->setCheckCodeValue();
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->apiUrl);
