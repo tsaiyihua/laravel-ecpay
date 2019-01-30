@@ -6,6 +6,8 @@ use TsaiYiHua\ECPay\Exceptions\ECPayException;
 
 class CheckoutResponseCollection extends Collection
 {
+    use CollectionTrait;
+
     protected $status;
     protected $message;
     protected $merchantId;

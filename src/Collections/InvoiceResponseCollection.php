@@ -14,6 +14,8 @@ use TsaiYiHua\ECPay\Exceptions\ECPayException;
 
 class InvoiceResponseCollection extends Collection
 {
+    use CollectionTrait;
+
     protected $status;
     protected $message;
 
