@@ -11,7 +11,9 @@ class ECPayServiceProvider extends ServiceProvider
             $this->registerConfigs();
         }
         $this->registerResources();
-        $this->loadRoutesFrom(__DIR__.'/routes.php');
+        if (ECPay::$useECPayRoute) {
+            $this->loadRoutesFrom(__DIR__ . '/routes.php');
+        }
     }
 
     protected function registerConfigs()

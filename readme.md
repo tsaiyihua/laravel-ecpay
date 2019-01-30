@@ -164,6 +164,13 @@ ECPAY_INVOICE_HASH_IV=
         return $this->invoice->setPostData($invData)->query();
     }
 ```
+
+#### 如果要用自己寫好的route，擔心和套作原設定的route衝突時
+ - 在 app/Http/Providers/AppServiceProvider 的 register 加入
+ ```php
+ ECPay::ignoreRoutes();
+ ```
+ 
  - 已知問題
    - 當資料有 CustomerEmail 或 CustomerAddr 時，串接API都會傳回 CheckMacValue 錯誤。
    - 當 CustomerName 中間有空格(space)時，就會傳回 CheckMacValue 錯誤。
