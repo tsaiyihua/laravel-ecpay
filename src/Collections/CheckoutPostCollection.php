@@ -66,6 +66,7 @@ class CheckoutPostCollection extends Collection
             $items = $this->attributes['Items'];
             $validateItem = $itemValidation->ItemValidation($items);
             $amount = 0;
+            $displayName = [];
             foreach ($items as $item) {
                 $displayName[] = $item['name'] . 'x' . $item['qty'];
                 $amount += $item['qty'] * $item['price'];
@@ -119,11 +120,16 @@ class CheckoutPostCollection extends Collection
             throw new ECPayException('attributes must be set');
         }
         if ($this->attributes['PaymentMethod'] == 'Credit' || $this->attributes['PaymentMethod'] == 'ALL') {
-            $this->put('BindingCard', (isset($this->attributes['BindingCard'])) ? $this->attributes['BindingCard']:0);
-            if (isset($this->attributes['PlatformID'])) {
-                $this->put('MerchantMemberID', $this->attributes['PlatformID'] . $this->attributes['UserId']);
-            } else {
-                $this->put('MerchantMemberID', $this->merchantId . $this->attributes['UserId']);
+            /** 欲使用 BindingCard、MerchantMemberID 這兩個參數功能,特店必須有會員系統。 */
+            if (isset($this->attributes['UserId'])) {
+                $this->put('BindingCard',
+                    (isset($this->attributes['BindingCard'])) ? $this->attributes['BindingCard'] : 0
+                );
+                if (isset($this->attributes['PlatformID'])) {
+                    $this->put('MerchantMemberID', $this->attributes['PlatformID'] . $this->attributes['UserId']);
+                } else {
+                    $this->put('MerchantMemberID', $this->merchantId . $this->attributes['UserId']);
+                }
             }
             if ($this->attributes['PaymentMethod'] == 'Credit' && isset($this->attributes['Language'])) {
                 $this->put('Language', $this->attributes['Language']);

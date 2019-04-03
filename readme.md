@@ -35,7 +35,7 @@ ECPAY_INVOICE_HASH_IV=
     public function sendOrder()
     {
         $formData = [
-            'UserId' => 1, // 用戶ID
+            'UserId' => 1, // 用戶ID , Optional
             'ItemDescription' => '產品簡介',
             'ItemName' => 'Product Name',
             'TotalAmount' => '2000',
