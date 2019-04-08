@@ -175,7 +175,7 @@ ECPAY_INVOICE_HASH_IV=
 - 方法一： 在 .env 裡使用 ECPAY_SEND_FORM 的環境變數來指定。
 - 方法二： 直接指定 ECPay::$sendForm 的值來指定。
  
- - 已知問題
+### 已知問題
    - 當資料有 CustomerEmail 或 CustomerAddr 時，串接API都會傳回 CheckMacValue 錯誤。
    - 當 CustomerName 中間有空格(space)時，就會傳回 CheckMacValue 錯誤。
    - 購買的商品單位用中文的話，只要一個字在 urlencode 後便會超過6個字元，然後噴錯。
