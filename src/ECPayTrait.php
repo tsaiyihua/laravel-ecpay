@@ -19,7 +19,15 @@ trait ECPayTrait
             'apiUrl' => $this->apiUrl,
             'postData' => $this->postData
         ];
-        return view('ecpay::send', $data);
+        if (ECPay::$sendForm === null) {
+            if (config('ecpay.SendForm') == null) {
+                return view('ecpay::send', $data);
+            } else {
+                return view(config('ecpay.SendForm'), $data);
+            }
+        } else {
+            return view(ECPay::$sendForm, $data);
+        }
     }
 
     /**

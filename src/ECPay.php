@@ -13,6 +13,8 @@ class ECPay
 {
     public static $useECPayRoute = true;
 
+    public static $sendForm = null;
+
     public static function ignoreRoutes()
     {
         static::$useECPayRoute = false;
