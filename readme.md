@@ -171,6 +171,9 @@ ECPAY_INVOICE_HASH_IV=
  ```php
  ECPay::ignoreRoutes();
  ```
+#### 如果要用自己傳送資料的頁面
+- 方法一： 在 .env 裡使用 ECPAY_SEND_FORM 的環境變數來指定。
+- 方法二： 直接指定 ECPay::$sendForm 的值來指定。
  
  - 已知問題
    - 當資料有 CustomerEmail 或 CustomerAddr 時，串接API都會傳回 CheckMacValue 錯誤。
