@@ -130,8 +130,8 @@ ECPAY_INVOICE_HASH_IV=
     ...
     public function queryInvInfo()
     {
-        $formData = ['orderId'=>'O154320382117474878'];
-        return $this->queryInvoice->getData($formData)->query();
+        $orderId' = 'O154320382117474878';
+        return $this->queryInvoice->getData($orderId)->query();
     }
 ```
 
