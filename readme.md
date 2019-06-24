@@ -116,8 +116,8 @@ ECPAY_INVOICE_HASH_IV=
     ...
     public function queryInfo()
     {
-        $formData = ['orderId'=>'O154320382117474878'];
-        return $this->queryTradeInfo->getData($formData)->query();
+        $orderId = 'O154320382117474878';
+        return $this->queryTradeInfo->getData($orderId)->query();
     }
 ```
 ### 查詢發票
