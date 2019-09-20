@@ -104,7 +104,7 @@ class Checkout
     {
         $invPostData = new InvoicePostCollection;
         $invPostData->setData($invData)->setPostDataForCheckout();
-        $this->postData = collect(array_merge($this->postData->toArray(), $invPostData->toArray()));
+        $this->postData = collect(array_merge($this->postData->all(), $invPostData->all()));
         return $this;
     }
 

@@ -97,8 +97,8 @@ ECPAY_INVOICE_HASH_IV=
             'userId' => 1
         ];
         $invData = [
-            'items' => $items,
-            'userId' => 1,
+            'Items' => $items,
+            'UserId' => 1,
             'CustomerName' => 'User Name',
             'CustomerAddr' => 'ABC 123',
             'CustomerEmail' => 'email@address'
@@ -174,16 +174,6 @@ ECPAY_INVOICE_HASH_IV=
 #### 如果要用自己傳送資料的頁面
 - 方法一： 在 .env 裡使用 ECPAY_SEND_FORM 的環境變數來指定。
 - 方法二： 直接指定 ECPay::$sendForm 的值來指定。
- 
-### 已知問題
-   - 當資料有 CustomerEmail 或 CustomerAddr 時，串接API都會傳回 CheckMacValue 錯誤。
-   - 當 CustomerName 中間有空格(space)時，就會傳回 CheckMacValue 錯誤。
-   - 購買的商品單位用中文的話，只要一個字在 urlencode 後便會超過6個字元，然後噴錯。
-
-### 限制
- - 由於開立發票串接問題，目前比較可行的只有即時交易，如信用卡付款方式，使用 withInvoice 方法來開立發票，非即時交易，如ATM，如果有發票的需求可以再去接別家的發票開立API。
- - 由於開立發票串接問題，CustomerEmail 及 CustomerAddr 在傳送時都會被濾掉，所以 CustomerPhone 變成必要的參數。
- - 開立發票時商品資料的單位不能用中文。
  
 ### 所有文件列的參數基本上都可用，參數用法請參考綠界串接文件
  - 回傳參數的背景通知(ReturnURL)，套件裡有預設的網址，但只止於通知，如果要有寫入資料庫的設計，要再設計自己的回傳通知網址。

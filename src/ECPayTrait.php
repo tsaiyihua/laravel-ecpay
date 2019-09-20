@@ -44,7 +44,7 @@ trait ECPayTrait
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, TRUE);
         curl_setopt($ch, CURLOPT_POST, TRUE);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($this->postData->toArray()));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($this->postData->all()));
 
         // 回傳參數
         $response = curl_exec($ch);
@@ -75,7 +75,7 @@ trait ECPayTrait
             $hashData['ignore'] = $this->checkMacValueIgnoreFields;
         }
         /** @var Collection $this->postData */
-        $checkValue = StringService::checkMacValueGenerator($this->postData->toArray(), $hashData);
+        $checkValue = StringService::checkMacValueGenerator($this->postData->all(), $hashData);
         /** @var Collection $this->postData */
         $this->postData->put('CheckMacValue', $checkValue);
     }
