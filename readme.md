@@ -2,8 +2,12 @@
 Laravel ECPay 為串接綠界的非官方套件
 
 ## 系統需求
- - PHP >= 7
- - Laravel >= 5.7
+- v2.x
+     - PHP >= 7.2
+     - Laravel >= 6.0
+- v1.x
+     - PHP >= 7
+     - Laravel >= 5.7 < 6.0
 
 ## 安裝
 ```composer require tsaiyihua/laravel-ecpay```
