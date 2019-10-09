@@ -67,7 +67,7 @@ class InvoicePostCollection extends Collection
         $customEmail = StringService::replaceSymbol(urlencode($this->attributes['CustomerEmail'] ?? ''));
         $customPhone = $this->attributes['CustomerPhone'] ?? '';
 
-        $this->put('RelateNumber', $this->get('MerchantTradeNo')??
+        $this->put('RelateNumber', $this->attributes['MerchantTradeNo']??
             StringService::identifyNumberGenerator('O'));
         $this->put('TaxType', (string)$taxType);
         $this->put('SalesAmount', $amount);
@@ -186,7 +186,7 @@ class InvoicePostCollection extends Collection
         $customPhone = $this->attributes['CustomerPhone'] ?? '';
 
         $this->put('InvoiceMark', 'Y');
-        $this->put('RelateNumber', $this->get('MerchantTradeNo')??StringService::identifyNumberGenerator('O'));
+        $this->put('RelateNumber', $this->attributes['MerchantTradeNo']??StringService::identifyNumberGenerator('O'));
         $this->put('TaxType', (string)$taxType);
         $this->put('InvoiceItemName', $itemNameInvoice);
         $this->put('InvoiceItemCount', $itemCountInvoice);
