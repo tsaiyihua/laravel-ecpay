@@ -5,15 +5,19 @@ Laravel ECPay 為串接綠界的非官方套件
 - v2.x
      - PHP >= 7.2
      - Laravel >= 6.0
-- v1.x
+- v1.x (不維護更新)
      - PHP >= 7
-     - Laravel >= 5.7 < 6.0
+     - Laravel < 6.0 且 >= 5.7
 
 ## 安裝
 ```composer require tsaiyihua/laravel-ecpay```
 
+
 ## 環境設定
-```php artisan vendor:publish --tag=ecpay```  
+```php artisan vendor:publish --tag=ecpay```
+
+這裡會將設定檔 ecpay.php 複製一份到 config 的目錄下。
+  
 ### .env 裡加入
 ```
 ECPAY_MERCHANT_ID=
@@ -29,12 +33,16 @@ ECPAY_INVOICE_HASH_IV=
 ### 基本用法
   - 產品資料單筆時可簡單只傳送 ItemName 及 TotalAmount
 ```php
-...
+use TsaiYiHua\ECPay\Checkout;
+
+class CheckoutController extends Controller
+{
+    protected $checkout;
+    
     public function __construct(Checkout $checkout)
     {
         $this->checkout = $checkout;
     }
-...
 
     public function sendOrder()
     {
@@ -79,12 +87,16 @@ ECPAY_INVOICE_HASH_IV=
  - 測試開立發票時，MerchantID 請設 2000132
 ##### 範例  
 ```php
-...
+use TsaiYiHua\ECPay\Checkout;
+
+class CheckoutController extends Controller
+{
+    protected $checkout;
+    
     public function __construct(Checkout $checkout)
     {
         $this->checkout = $checkout;
     }
-...
 
     public function sendOrder()
     {
@@ -112,40 +124,54 @@ ECPAY_INVOICE_HASH_IV=
 ```
 ### 查詢訂單
 ```php
-    public function __construct(Checkout $checkout,  QueryTradeInfo $queryTradeInfo)
+use TsaiYiHua\ECPay\QueryTradeInfo;
+
+class QueryTradeController extends Controller
+{
+    protected $queryTradeInfo;
+    
+    public function __construct(QueryTradeInfo $queryTradeInfo)
     {
-        $this->checkout = $checkout;
         $this->queryTradeInfo = $queryTradeInfo;
     }
-    ...
-    public function queryInfo()
+    
+    public function queryInfo($orderId)
     {
-        $orderId = 'O154320382117474878';
         return $this->queryTradeInfo->getData($orderId)->query();
     }
+}
 ```
 ### 查詢發票
 ```php
-    public function __construct(Checkout $checkout,  QueryInvoice $queryInvoice)
+use TsaiYiHua\ECPay\QueryInvoice;
+
+class QueryInvoiceController extends Controller
+{
+    protected $queryInvoice;
+
+    public function __construct(QueryInvoice $queryInvoice)
     {
-        $this->checkout = $checkout;
         $this->queryInvoice = $queryInvoice;
     }
-    ...
-    public function queryInvInfo()
+
+    public function queryInvInfo($orderId)
     {
-        $orderId' = 'O154320382117474878';
         return $this->queryInvoice->getData($orderId)->query();
     }
+}
 ```
 
 ### 開立發票
 ```php
+use TsaiYiHua\ECPay\Invoice;
+
+class InvoiceController extends Controller
+{
     public function __construct(Invoice $invoice)
     {
         $this->invoice = $invoice;
     }
-    ...
+
     public function issueInvoice()
     {
         $itemData[] = [
@@ -168,13 +194,15 @@ ECPAY_INVOICE_HASH_IV=
         ];
         return $this->invoice->setPostData($invData)->query();
     }
+}
 ```
 
-#### 如果要用自己寫好的route，擔心和套作原設定的route衝突時
+#### 套件中有設定和綠界溝通用的route及基本處理方法，如果要有自己的處理邏輯要用自己寫好的route，擔心和套件原設定的route衝突時
  - 在 app/Http/Providers/AppServiceProvider 的 register 加入
  ```php
  ECPay::ignoreRoutes();
  ```
+ 
 #### 如果要用自己傳送資料的頁面
 - 方法一： 在 .env 裡使用 ECPAY_SEND_FORM 的環境變數來指定。
 - 方法二： 直接指定 ECPay::$sendForm 的值來指定。
