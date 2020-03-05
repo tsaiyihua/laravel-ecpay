@@ -164,6 +164,8 @@ class QueryInvoiceController extends Controller
 ### 開立發票
 ```php
 use TsaiYiHua\ECPay\Invoice;
+use TsaiYiHua\ECPay\Constants\ECPayDonation;
+use TsaiYiHua\ECPay\Services\StringService;
 
 class InvoiceController extends Controller
 {

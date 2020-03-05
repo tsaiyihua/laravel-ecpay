@@ -5,7 +5,7 @@
     "keywords": ["payment", "ecpay", "laravel"],
     "require": {
         "php": ">=7.2",
-        "laravel/framework": "^6.0"
+        "laravel/framework": "^6.0|^7.0"
     },
     "license": "MIT",
     "authors": [
