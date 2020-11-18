@@ -222,9 +222,9 @@ class InvoiceController extends Controller
    - 文件編號 gw_p110
    - 文件位置 documents/ecpay_gw_p110.pdf
  - 綠界科技電子發票介接技術文件 (2018-11-07)
-   - V 2.2.2
+   - V 2.2.15
    - 文件編號 gw_i100
-   - 文件位置 documents/ecpay_004.pdf
+   - 文件位置 documents/B2C電子發票介接技術文件.pdf
  - 綠界科技全方位金流介接技術文件 (2018-11-05)
    - V 5.1.22
    - 文件編號 gw_p100
