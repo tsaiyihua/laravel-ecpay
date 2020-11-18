@@ -197,7 +197,7 @@ class InvoiceController extends Controller
             'Print' => 0,
             'CarruerType' => 1
         ];
-        return $this->invoice->setPostData($invData)->query();
+        return $this->invoice->setPostData($invData)->ecpayInvoice->Check_Out();
     }
 }
 ```
