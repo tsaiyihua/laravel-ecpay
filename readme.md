@@ -12,6 +12,9 @@ Laravel ECPay 為串接綠界的非官方套件
 ## 安裝
 ```composer require tsaiyihua/laravel-ecpay```
 
+### 2.4 版說明
+2.4 版主要是把官方PHP 5.3的函式庫直接代入使用, 所以在用 composer 安裝時會出現一堆 psr-4 的警告訊息.  
+如果沒有要直接用綠界來開發票的話, 可以繼續使用2.3版.
 
 ## 環境設定
 ```php artisan vendor:publish --tag=ecpay```
