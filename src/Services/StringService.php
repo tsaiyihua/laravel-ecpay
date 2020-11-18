@@ -44,13 +44,19 @@ class StringService
             }
         }
         uksort($data, array(self::class, 'merchantSort'));
+
         $checkCodeStr = 'HashKey='.$hashData['key'];
         foreach($data as $key=>$val) {
             $checkCodeStr .= '&'.$key.'='.$val;
         }
         $checkCodeStr .= '&HashIV='.$hashData['iv'];
-        $checkCodeStr = self::replaceSymbol(urlencode($checkCodeStr));
-        return strtoupper(hash($hashData['type'], strtolower($checkCodeStr)));
+        if ($hashData['type'] === 'md5') {
+            $checkCodeStr = self::replaceSymbol(strtolower(urlencode($checkCodeStr)));
+            return strtoupper(md5($checkCodeStr));
+        } else {
+            $checkCodeStr = self::replaceSymbol(urlencode($checkCodeStr));
+            return strtoupper(hash($hashData['type'], strtolower($checkCodeStr)));
+        }
     }
 
     /**

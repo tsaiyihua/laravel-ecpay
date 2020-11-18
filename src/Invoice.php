@@ -28,6 +28,8 @@ class Invoice
 
     protected $checkMacValueIgnoreFields;
 
+    public $ecpayInvoice;
+
     public function __construct(InvoicePostCollection $postData)
     {
         if (config('app.env') == 'production') {
@@ -37,11 +39,17 @@ class Invoice
         }
         $this->postData = $postData;
 
-        $this->hashKey = config('ecpay.InvoiceHashKey');
-        $this->hashIv = config('ecpay.InvoiceHashIV');
-        $this->checkMacValueIgnoreFields = [
-            'InvoiceRemark', 'ItemName', 'ItemWord', 'ItemRemark', 'CheckMacValue'
-        ];
+        /**
+         * 官方函式庫是 php 5.3 的寫法, 但因為在 php 7.4 導入 namespace 的環境下,
+         * Ecpay_Invoice.php 也須需加入 namespace 的設定
+         */
+        require_once('Libs/Ecpay_Invoice.php');
+        $this->ecpayInvoice = new Libs\EcpayInvoice ;
+        $this->ecpayInvoice->Invoice_Method = 'INVOICE' ;
+        $this->ecpayInvoice->Invoice_Url = $this->apiUrl;
+        $this->ecpayInvoice->MerchantID = config('ecpay.MerchantId');
+        $this->ecpayInvoice->HashKey = config('ecpay.InvoiceHashKey');
+        $this->ecpayInvoice->HashIV = config('ecpay.InvoiceHashIV');
     }
 
     /**
@@ -51,7 +59,10 @@ class Invoice
      */
     public function setPostData($invData)
     {
-        $this->postData->setData($invData)->setBasicInfo()->setPostData();
+        $this->postData->setData($invData)->setPostRawData();
+        foreach($this->postData->all() as $key=>$val) {
+            $this->ecpayInvoice->Send[$key] = $val;
+        }
         return $this;
     }
 }
