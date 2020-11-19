@@ -1,13 +1,12 @@
 <?php
+
+
 namespace TsaiYiHua\ECPay\Constants;
 
-/**
- * 字軌類別
- */
-class ECPayInvType
+
+class ECPayPayTypeCategory
 {
-    // 一般稅額
-    const General = '07';
+    const Ecpay = '2';
 
     /**
      * @return \Illuminate\Support\Collection
@@ -15,7 +14,7 @@ class ECPayInvType
     static public function getConstantValues()
     {
         return collect([
-            self::General
+            self::Ecpay
         ])->unique();
     }
 }

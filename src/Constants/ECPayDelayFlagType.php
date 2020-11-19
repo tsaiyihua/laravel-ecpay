@@ -1,13 +1,16 @@
 <?php
+
+
 namespace TsaiYiHua\ECPay\Constants;
 
-/**
- * 字軌類別
- */
-class ECPayInvType
+
+class ECPayDelayFlagType
 {
-    // 一般稅額
-    const General = '07';
+    // 延遲註記
+    const Delay = '1';
+
+    // 觸發註記
+    const Trigger = '2';
 
     /**
      * @return \Illuminate\Support\Collection
@@ -15,7 +18,9 @@ class ECPayInvType
     static public function getConstantValues()
     {
         return collect([
-            self::General
+            self::Delay,
+            self::Trigger
         ])->unique();
     }
+
 }

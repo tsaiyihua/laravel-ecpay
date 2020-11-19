@@ -9,24 +9,28 @@ trait ECPayTrait
 {
     /**
      * Send data to ECPay
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|array
      * @throws ECPayException
      */
     public function send()
     {
-        $this->setCheckCodeValue();
-        $data = [
-            'apiUrl' => $this->apiUrl,
-            'postData' => $this->postData
-        ];
-        if (ECPay::$sendForm === null) {
-            if (config('ecpay.SendForm') == null) {
-                return view('ecpay::send', $data);
-            } else {
-                return view(config('ecpay.SendForm'), $data);
-            }
+        if (class_basename(self::class) === 'Invoice') {
+            return $this->ecpayInvoice->Check_Out();
         } else {
-            return view(ECPay::$sendForm, $data);
+            $this->setCheckCodeValue();
+            $data = [
+                'apiUrl' => $this->apiUrl,
+                'postData' => $this->postData
+            ];
+            if (ECPay::$sendForm === null) {
+                if (config('ecpay.SendForm') == null) {
+                    return view('ecpay::send', $data);
+                } else {
+                    return view(config('ecpay.SendForm'), $data);
+                }
+            } else {
+                return view(ECPay::$sendForm, $data);
+            }
         }
     }
 
@@ -81,7 +85,7 @@ trait ECPayTrait
     }
 
     /**
-     * @param $response
+     * @param string $response
      * @return Collection
      * @throws ECPayException
      */

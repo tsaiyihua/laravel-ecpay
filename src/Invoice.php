@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use TsaiYiHua\ECPay\Collections\InvoicePostCollection;
 use TsaiYiHua\ECPay\Exceptions\ECPayException;
+use TsaiYiHua\ECPay\Libs\ECPayInvoice;
 use TsaiYiHua\ECPay\Services\StringService;
 use TsaiYiHua\ECPay\Validations\InvoiceValidation;
 
@@ -30,7 +31,7 @@ class Invoice
 
     public $ecpayInvoice;
 
-    public function __construct(InvoicePostCollection $postData)
+    public function __construct(InvoicePostCollection $postData, ECPayInvoice $ecpayInvoice)
     {
         if (config('app.env') == 'production') {
             $this->apiUrl = 'https://einvoice.ecpay.com.tw/Invoice/Issue';
@@ -43,8 +44,9 @@ class Invoice
          * 官方函式庫是 php 5.3 的寫法, 但因為在 php 7.4 導入 namespace 的環境下,
          * Ecpay_Invoice.php 也須需加入 namespace 的設定
          */
-        require_once('Libs/Ecpay_Invoice.php');
-        $this->ecpayInvoice = new Libs\EcpayInvoice ;
+//        require_once('Libs/Ecpay_Invoice.php');
+//        $this->ecpayInvoice = new Libs\EcpayInvoice ;
+        $this->ecpayInvoice = $ecpayInvoice;
         $this->ecpayInvoice->Invoice_Method = 'INVOICE' ;
         $this->ecpayInvoice->Invoice_Url = $this->apiUrl;
         $this->ecpayInvoice->MerchantID = config('ecpay.MerchantId');
