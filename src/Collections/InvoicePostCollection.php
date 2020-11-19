@@ -3,6 +3,11 @@ namespace TsaiYiHua\ECPay\Collections;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use TsaiYiHua\ECPay\Constants\ECPayCarruerType;
+use TsaiYiHua\ECPay\Constants\ECPayDonation;
+use TsaiYiHua\ECPay\Constants\ECPayInvType;
+use TsaiYiHua\ECPay\Constants\ECPayPrintMark;
+use TsaiYiHua\ECPay\Constants\ECPayTaxType;
 use TsaiYiHua\ECPay\Exceptions\ECPayException;
 use TsaiYiHua\ECPay\Services\StringService;
 use TsaiYiHua\ECPay\Validations\InvoiceValidation;
@@ -176,17 +181,17 @@ class InvoicePostCollection extends Collection
             $itemData[$i]['ItemCount'] = $item['qty'];
             $itemData[$i]['ItemWord'] = $item['unit'];
             $itemData[$i]['ItemPrice'] = $item['price'];
-            $itemData[$i]['ItemTaxType'] = $item['taxType'] ?? 1;
+            $itemData[$i]['ItemTaxType'] = $item['taxType'] ?? ECPayTaxType::Dutiable;
             $itemData[$i]['ItemAmount'] = $item['price']*$item['qty'];
             $amount += $item['price']*$item['qty'];
             $i++;
         }
 
-        $taxType = $this->attributes['TaxType'] ?? 1;
-        $print = $this->attributes['Print'] ?? 1;
-        $carruerType = $this->attributes['CarruerType'] ?? '';
-        $donation = $this->attributes['Donation'] ?? '0';
-        $invType = $this->attributes['InvType'] ?? '07';
+        $taxType = $this->attributes['TaxType'] ?? ECPayTaxType::Dutiable;
+        $print = $this->attributes['Print'] ?? ECPayPrintMark::Yes;
+        $carruerType = $this->attributes['CarruerType'] ?? ECPayCarruerType::None;
+        $donation = $this->attributes['Donation'] ?? ECPayDonation::No;
+        $invType = $this->attributes['InvType'] ?? ECPayInvType::General;
         $customerIdentifier = $this->attributes['CustomerIdentifier'] ?? '';
         $customerName = $this->attributes['CustomerName'] ?? '';
         $customerAddress = $this->attributes['CustomerAddr'] ?? '';
@@ -301,12 +306,12 @@ class InvoicePostCollection extends Collection
         $itemUnitInvoice = implode('|', $itemUnit);
         $itemPriceInvoice = implode('|', $itemPrice);
 
-        $taxType = $this->attributes['TaxType'] ?? 1;
+        $taxType = $this->attributes['TaxType'] ?? ECPayTaxType::Dutiable;
         $delayDay = $this->attributes['DelayDay'] ?? 0;
-        $print = $this->attributes['Print'] ?? 1;
-        $carruerType = $this->attributes['CarruerType'] ?? '';
-        $donation = $this->attributes['Donation'] ?? '';
-        $invType = $this->attributes['InvType'] ?? '07';
+        $print = $this->attributes['Print'] ?? ECPayPrintMark::No;
+        $carruerType = $this->attributes['CarruerType'] ?? ECPayCarruerType::None;
+        $donation = $this->attributes['Donation'] ?? '0';
+        $invType = $this->attributes['InvType'] ?? ECPayInvType::General;
         $customerIdentifier = $this->attributes['CustomerIdentifier'] ?? '';
         $customerName = StringService::replaceSymbol(urlencode($this->attributes['CustomerName'] ?? ''));
         $customerAddress = StringService::replaceSymbol(urlencode($this->attributes['CustomerAddr'] ?? ''));
@@ -320,12 +325,12 @@ class InvoicePostCollection extends Collection
         $this->put('InvoiceItemCount', $itemCountInvoice);
         $this->put('InvoiceItemWord', $itemUnitInvoice);
         $this->put('InvoiceItemPrice', $itemPriceInvoice);
-        $this->put('DelayDay', $delayDay);
-        $this->put('InvType', $invType);
-        $this->put('Print', (string)$print);
+        $this->put('DelayDay', (int) $delayDay);
+        $this->put('InvType', (string) $invType);
+        $this->put('Print', (string) $print);
 
-        $this->put('CustomerID', (string)$this->attributes['UserId']);
-        $this->put('CustomerIdentifier', $customerIdentifier);
+        $this->put('CustomerID', (string) $this->attributes['UserId']);
+        $this->put('CustomerIdentifier', (string) $customerIdentifier);
         if ($print == 0) {
             if (empty($carruerType) && empty($donation)) {
                 $validator->getMessageBag()
@@ -376,20 +381,20 @@ class InvoicePostCollection extends Collection
             $okValue = [1,2];
             $clearanceMark = $this->attributes['ClearanceMark'] ?? '';
             if (in_array($clearanceMark, $okValue)) {
-                $this->put('ClearanceMark', $clearanceMark);
+                $this->put('ClearanceMark', (string) $clearanceMark);
             } else {
                 $validator->getMessageBag()
                     ->add('ClearanceMark', 'ClearanceMark must be 1 or 2 while TaxType is 2');
             }
         }
         if ($carruerType == 2 || $carruerType == 3) {
-            $this->put('CarruerNum', $this->attributes['CarruerNum']);
+            $this->put('CarruerNum', (string) $this->attributes['CarruerNum']);
         } else {
             $this->put('CarruerNum', '');
         }
-        $this->put('Donation', $donation);
+        $this->put('Donation', (string) $donation);
         if ($donation == 1) {
-            $this->put('LoveCode', $this->attributes['LoveCode']);
+            $this->put('LoveCode', (string) $this->attributes['LoveCode']);
         }
         if ( $validator->getMessageBag()->count() > 0 ) {
             throw new ECPayException($validator->getMessageBag());
