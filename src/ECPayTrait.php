@@ -60,6 +60,16 @@ trait ECPayTrait
             throw new ECPayException('HTTP Error with code '.$httpStatus);
         }
     }
+
+    /**
+     * Get Post Data
+     * @return mixed
+     */
+    public function getPostData()
+    {
+        return $this->postData;
+    }
+
     /**
      * Set CheckMacValue to postData
      * @throws ECPayException
