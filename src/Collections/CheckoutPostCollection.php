@@ -40,7 +40,7 @@ class CheckoutPostCollection extends Collection
             throw new ECPayException('attributes must be set');
         }
         $this->put('MerchantID', $this->merchantId);
-        $this->put('MerchantTradeDate', Carbon::now()->format('Y/m/d H:i:s'));
+        $this->put('MerchantTradeDate', $this->attributes['MerchantTradeDate'] ?? Carbon::now()->format('Y/m/d H:i:s'));
         $this->put('PaymentType', 'aio');
         $this->put('ReturnURL', $this->notifyUrl);
         $this->put('OrderResultURL', $this->returnUrl);
