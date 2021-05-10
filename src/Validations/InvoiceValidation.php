@@ -30,7 +30,7 @@ class InvoiceValidation
             'Items' => 'required|array',
             'OrderId' => 'alpha_num|max:30',
             'CustomerID' => 'alpha_dash|max:20',
-            'CustomerIdentifier' => 'int|max:8',
+            'CustomerIdentifier' => 'digits:8',
             'CustomerName' => 'required_if:Print,1|max:60',
             'CustomerAddr' => 'required_if:Print,1|max:200',
             'CustomerPhone' => 'required_if:CustomerEmail,null|max:20',
