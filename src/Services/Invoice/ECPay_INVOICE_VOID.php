@@ -47,7 +47,7 @@ class ECPay_INVOICE_VOID implements ECPayService
     /**
      * 2-2 驗證參數格式
      */
-    public function checkException(array $arParameters): array
+    public function checkExtendString(array $arParameters): array
     {
 
         $arErrors = array();
@@ -64,7 +64,7 @@ class ECPay_INVOICE_VOID implements ECPayService
 
         // 43.作廢原因 Reason
         // *必填欄位
-        if(strlen($arParameters['Reason']) == 0) {
+        if (strlen($arParameters['Reason']) == 0) {
             array_push($arErrors, "43:Reason is required.");
         }
         // *字數限制在20(含)個字以內
@@ -82,7 +82,7 @@ class ECPay_INVOICE_VOID implements ECPayService
     /**
      * 4欄位例外處理方式(送壓碼前)
      */
-    public function checkExtendString(array $arParameters): array
+    public function checkException(array $arParameters): array
     {
         return $arParameters ;
     }

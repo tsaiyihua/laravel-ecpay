@@ -40,12 +40,6 @@ class Invoice
         }
         $this->postData = $postData;
 
-        /**
-         * 官方函式庫是 php 5.3 的寫法, 但因為在 php 7.4 導入 namespace 的環境下,
-         * Ecpay_Invoice.php 也須需加入 namespace 的設定
-         */
-//        require_once('Libs/Ecpay_Invoice.php');
-//        $this->ecpayInvoice = new Libs\EcpayInvoice ;
         $this->ecpayInvoice = $ecpayInvoice;
         $this->ecpayInvoice->Invoice_Method = 'INVOICE' ;
         $this->ecpayInvoice->Invoice_Url = $this->apiUrl;
