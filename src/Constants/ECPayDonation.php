@@ -10,7 +10,7 @@ class ECPayDonation
     const Yes = '1';
 
     // 不捐贈
-    const No = '2';
+    const No = '0';
 
     /**
      * @return \Illuminate\Support\Collection
