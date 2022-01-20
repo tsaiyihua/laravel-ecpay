@@ -100,7 +100,8 @@ class CheckoutPostCollection extends Collection
         $optionParams = [
             'StoreId', 'ClientBackURL', 'ItemURL', 'Remark', 'ChooseSubPayment',
             'NeedExtraPaidInfo', 'IgnorePayment', 'PlatformID', 'InvoiceMark', 'CustomField1',
-            'CustomField2', 'CustomField3', 'CustomField4', 'ExpireDate', 'PaymentInfoURL', 'ClientRedirectURL'
+            'CustomField2', 'CustomField3', 'CustomField4', 'ExpireDate', 'PaymentInfoURL', 'ClientRedirectURL',
+            'Language'
         ];
         foreach($optionParams as $param) {
             if (isset($this->attributes[$param]) && !empty($this->attributes[$param])) {
@@ -130,9 +131,6 @@ class CheckoutPostCollection extends Collection
                 } else {
                     $this->put('MerchantMemberID', $this->merchantId . $this->attributes['UserId']);
                 }
-            }
-            if ($this->attributes['PaymentMethod'] == 'Credit' && isset($this->attributes['Language'])) {
-                $this->put('Language', $this->attributes['Language']);
             }
             if (isset($this->attributes['CreditInstallment'])) {
                 $this->put('CreditInstallment', $this->attributes['CreditInstallment']);
