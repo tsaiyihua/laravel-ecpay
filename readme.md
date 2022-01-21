@@ -213,15 +213,15 @@ class InvoiceController extends Controller
  - OrderResultURL 為結帳完返回自已站台的網址，不能與 ReturnURL 相同。
 
 ## 參考文件
- - 綠界科技全方位金流信用卡介接技術文件 (2018-10-08)
-   - V 5.1.21
+ - 綠界科技全方位金流信用卡介接技術文件 (2021-08-19)
+   - V 5.2.8
    - 文件編號 gw_p110
    - 文件位置 documents/ecpay_gw_p110.pdf
- - 綠界科技電子發票介接技術文件 (2018-11-07)
-   - V 2.2.15
+ - 綠界科技B2C電子發票介接技術文件 (2022-01-03)
+   - V 3.6.4
    - 文件編號 gw_i100
-   - 文件位置 documents/ecpay_gw_i100.pdf
- - 綠界科技全方位金流介接技術文件 (2018-11-05)
-   - V 5.1.22
+   - 文件位置 documents/ecpay_004.pdf
+ - 綠界科技全方位金流介接技術文件 (2021-11-30)
+   - V 5.3.11
    - 文件編號 gw_p100
    - 文件位置 documents/ecpay_011.pdf
