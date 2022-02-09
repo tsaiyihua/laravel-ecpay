@@ -1,23 +1,16 @@
 <?php
 namespace TsaiYiHua\ECPay;
-use Carbon\Carbon;
-use Illuminate\Support\Collection;
+
 use TsaiYiHua\ECPay\Collections\CheckoutPostCollection;
 use TsaiYiHua\ECPay\Collections\InvoicePostCollection;
 use TsaiYiHua\ECPay\Exceptions\ECPayException;
-use TsaiYiHua\ECPay\Services\StringService;
-use TsaiYiHua\ECPay\Validations\InstallmentValidation;
-use TsaiYiHua\ECPay\Validations\InvoiceValidation;
-use TsaiYiHua\ECPay\Validations\ItemValidation;
 use TsaiYiHua\ECPay\Validations\PaymentValidation;
-use TsaiYiHua\ECPay\Validations\PeriodAmountValidator;
 
 class Checkout
 {
     use ECPayTrait;
 
     protected $apiUrl;
-    protected $postData;
     protected $platform;
     protected $merchantId;
     protected $hashKey;
@@ -27,15 +20,16 @@ class Checkout
 
     protected $itemValidation;
 
-    public function __construct(CheckoutPostCollection $checkoutPostCollection)
+    /**
+     * @param CheckoutPostCollection $postData
+     */
+    public function __construct(protected CheckoutPostCollection $postData)
     {
         if (config('app.env') == 'production') {
             $this->apiUrl = 'https://payment.ecpay.com.tw/Cashier/AioCheckOut/V5';
         } else {
             $this->apiUrl = 'https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5';
         }
-        $this->postData = $checkoutPostCollection;
-
         $this->merchantId = config('ecpay.MerchantId');
         $this->hashKey = config('ecpay.HashKey');
         $this->hashIv = config('ecpay.HashIV');
@@ -43,11 +37,11 @@ class Checkout
 
     /**
      * Handle the Post Data
-     * @param $data
+     * @param array $data
      * @return $this
      * @throws ECPayException
      */
-    public function setPostData($data)
+    public function setPostData(array $data)
     {
         $validator = PaymentValidation::postDataValidator($data);
         if ($validator->fails()) {
@@ -63,7 +57,7 @@ class Checkout
      * @return $this
      * @throws ECPayException
      */
-    public function setPlatform($platformId)
+    public function setPlatform(string $platformId)
     {
         if (strlen($platformId) > 10) {
             throw new ECPayException('PlatformId max length is 10');
@@ -78,18 +72,18 @@ class Checkout
      * @return $this;
      * @throws ECPayException
      */
-    public function withInstallment($installmentData)
+    public function withInstallment(string $installmentData)
     {
         $this->postData->setInstallment($installmentData);
         return $this;
     }
 
     /**
-     * @param $data
+     * @param array $data
      * @return $this
      * @throws ECPayException
      */
-    public function withPeriodAmount($data)
+    public function withPeriodAmount(array $data)
     {
         $this->postData->setPeriodAmount($data);
         return $this;
@@ -100,21 +94,27 @@ class Checkout
      * @return $this
      * @throws ECPayException
      */
-    public function withInvoice($invData)
+    public function withInvoice(array $invData)
     {
-        $invPostData = new InvoicePostCollection;
-        $invPostData->setData($invData)->setPostDataForCheckout();
-        $this->postData = collect(array_merge($this->postData->all(), $invPostData->all()));
+        $this->postData->setInvoice($invData);
         return $this;
     }
 
-    public function setNotifyUrl($url)
+    /**
+     * @param string $url
+     * @return $this
+     */
+    public function setNotifyUrl(string $url)
     {
         $this->postData->notifyUrl = $url;
         return $this;
     }
 
-    public function setReturnUrl($url)
+    /**
+     * @param string $url
+     * @return $this
+     */
+    public function setReturnUrl(string $url)
     {
         $this->postData->returnUrl = $url;
         return $this;
