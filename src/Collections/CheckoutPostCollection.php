@@ -24,7 +24,11 @@ class CheckoutPostCollection extends Collection
         $this->returnUrl = route('ecpay.return');
     }
 
-    public function setData($formData)
+    /**
+     * @param array $formData
+     * @return $this
+     */
+    public function setData(array $formData)
     {
         $this->attributes = $formData;
         return $this;
@@ -151,7 +155,7 @@ class CheckoutPostCollection extends Collection
      * @return $this;
      * @throws ECPayException
      */
-    public function setInstallment($installmentData)
+    public function setInstallment(string $installmentData)
     {
         $validator = InstallmentValidation::installmentValidator($installmentData);
         if ($validator->fails()) {
@@ -162,11 +166,11 @@ class CheckoutPostCollection extends Collection
     }
 
     /**
-     * @param $data
+     * @param array $data
      * @return $this
      * @throws ECPayException
      */
-    public function setPeriodAmount($data)
+    public function setPeriodAmount(array $data)
     {
         $validator = PeriodAmountValidator::periodAmtValidator($data);
         if ($validator->fails()) {
@@ -183,6 +187,20 @@ class CheckoutPostCollection extends Collection
                 $this->put($param, $data[$param]);
             }
         }
+        return $this;
+    }
+
+    /**
+     * @param array $data
+     * @return $this
+     * @throws ECPayException
+     */
+    public function setInvoice(array $data)
+    {
+        $invPostData = new InvoicePostCollection;
+        $invPostData->setData($data)->setPostDataForCheckout()->each(function($invData, $key) {
+            $this->put($key, $invData);
+        });
         return $this;
     }
 }

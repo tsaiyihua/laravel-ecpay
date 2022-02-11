@@ -4,8 +4,8 @@
     "type": "library",
     "keywords": ["payment", "ecpay", "laravel"],
     "require": {
-        "php": ">=7.2",
-        "laravel/framework": "^6|7.30.4|^8.40.0"
+        "php": ">=8.0",
+        "laravel/framework": "^9.0"
     },
     "license": "MIT",
     "authors": [
