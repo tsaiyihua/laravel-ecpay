@@ -120,7 +120,7 @@ class InvoicePostCollection extends Collection
                 $validator->getMessageBag()
                     ->add('CarruerType', 'CarruerType cat not be 1 or 2 while CustomerIdentifier has value');
             }
-            $donation = 2;
+            $donation = ECPayDonation::No;
         }
         if (strlen($customerName) > 60) {
             $validator->getMessageBag()->add('CustomerName', 'CustomerName can not great then 60 characters');
@@ -238,7 +238,7 @@ class InvoicePostCollection extends Collection
                 $validator->getMessageBag()
                     ->add('CarruerType', 'CarruerType cat not be 1 or 2 while CustomerIdentifier has value');
             }
-            $donation = 2;
+            $donation = ECPayDonation::No;
         }
         if (strlen($customerName) > 60) {
             $validator->getMessageBag()->add('CustomerName', 'CustomerName can not great then 60 characters');
@@ -360,7 +360,7 @@ class InvoicePostCollection extends Collection
                 $validator->getMessageBag()
                     ->add('CarruerType', 'CarruerType cat not be 1 or 2 while CustomerIdentifier has value');
             }
-            $donation = 0;
+            $donation = ECPayDonation::No;
         }
         if (strlen($customerName) > 60) {
             $validator->getMessageBag()->add('CustomerName', 'CustomerName can not great then 60 characters');
