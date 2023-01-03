@@ -1,7 +1,6 @@
 <?php
 namespace TsaiYiHua\ECPay\Tests;
 
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
 use TsaiYiHua\ECPay\Checkout;
 use TsaiYiHua\ECPay\Collections\CheckoutPostCollection;
@@ -9,7 +8,6 @@ use TsaiYiHua\ECPay\Constants\ECPayCarruerType;
 use TsaiYiHua\ECPay\Constants\ECPayDonation;
 use TsaiYiHua\ECPay\Exceptions\ECPayException;
 use TsaiYiHua\ECPay\Services\StringService;
-use TsaiYiHua\LinePay\Collections\PostDataCollection;
 
 uses(TestCase::class)->in('.');
 

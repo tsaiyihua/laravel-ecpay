@@ -20,9 +20,4 @@ trait CollectionTrait
     {
         return $this->message;
     }
-
-    public function getItems()
-    {
-        return $this->items;
-    }
 }

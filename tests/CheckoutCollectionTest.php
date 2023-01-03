@@ -3,6 +3,7 @@ namespace TsaiYiHua\ECPay\Tests;
 
 use Illuminate\Support\Facades\Config;
 use TsaiYiHua\ECPay\Collections\CheckoutPostCollection;
+use TsaiYiHua\ECPay\Collections\CheckoutResponseCollection;
 use TsaiYiHua\ECPay\Exceptions\ECPayException;
 use TsaiYiHua\ECPay\Services\StringService;
 
@@ -242,4 +243,38 @@ test('set checkout post collection - setPeriodAmount fail', function() {
     $checkoutPostCollection->setData($this->formData)->setOrderInfo()->setPeriodAmount($periodAmountData);
 })->throws(ECPayException::class);
 
+test('checkout response collection - fail', function() {
+    $orderId = StringService::identifyNumberGenerator('O');
+    $postData = [
+        'RtnMsg' => '交易成功'
+    ];
+    $checkoutResponseCollection = new CheckoutResponseCollection();
+    $checkoutResponseCollection->collectResponse($postData);
+})->throws(ECPayException::class);
+
+test('checkout response collection', function() {
+    $orderId = StringService::identifyNumberGenerator('O');
+    $postData = [
+        'RtnCode' => 1, // success,
+        'RtnMsg' => '交易成功',
+        'MerchantID' => config('ecpay.MerchantId'),
+        'MerchantTradeNo' => $orderId,
+        'StoreID' => 'store123',
+        'TradeNo' => '20120315174058256424',
+        'TradeAmt' => 2000,
+        'PaymentDate' => '2012/03/16 12:03:12',
+        'PaymentType' => 'Credit_CreditCard',
+        'TradeDate' => '2012/03/15 17:40:58',
+        'SimulatePaid' => 1,
+        'CustomField1' => '',
+        'CustomField2' => '',
+        'CustomField3' => '',
+        'CustomField4' => '',
+        'CheckMacValue' => '9139AF2AC5D0F9EBC5F3CD44064F666AAA62F0B202B95B341CC25E080EA4FC6E'
+    ];
+    $checkoutResponseCollection = new CheckoutResponseCollection();
+    $checkoutResponseCollection->collectResponse($postData);
+    $this->assertEquals(1, $checkoutResponseCollection->getStatus());
+    $this->assertEquals('交易成功', $checkoutResponseCollection->getMessage());
+});
 
