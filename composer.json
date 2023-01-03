@@ -7,6 +7,10 @@
         "php": ">=8.0",
         "laravel/framework": "^9.0"
     },
+    "require-dev": {
+        "pestphp/pest": "^1.22",
+        "orchestra/testbench": "^7.16"
+    },
     "license": "MIT",
     "authors": [
         {
@@ -19,11 +23,24 @@
             "TsaiYiHua\\ECPay\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "TsaiYiHua\\ECPay\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest"
+    },
     "extra": {
         "laravel": {
             "providers": [
                 "TsaiYiHua\\ECPay\\ECPayServiceProvider"
             ]
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
         }
     }
 }

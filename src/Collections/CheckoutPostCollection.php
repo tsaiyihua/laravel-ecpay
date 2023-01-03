@@ -66,9 +66,15 @@ class CheckoutPostCollection extends Collection
             $itemNamePayment = $this->attributes['ItemName'];
             $amount = $this->attributes['TotalAmount'];
         } else {
+            if (!isset($this->attributes['Items'])) {
+                throw new ECPayException('Items attribute must be set while ItemName is empty (for multi-item)');
+            }
             $itemValidation = new ItemValidation;
             $items = $this->attributes['Items'];
             $validateItem = $itemValidation->ItemValidation($items);
+            if ($validateItem->count() > 0) {
+                throw new ECPayException($validateItem->getMessageBag());
+            }
             $amount = 0;
             $displayName = [];
             foreach ($items as $item) {
@@ -78,11 +84,7 @@ class CheckoutPostCollection extends Collection
             $itemNamePayment = implode('#', $displayName);
 
             if (strlen($itemNamePayment) > 200) {
-                $validateItem->add('ItemName', 'Composed Item Name can not more then 200 characters');
-            }
-
-            if ($validateItem->count() > 0) {
-                throw new ECPayException($validateItem->getMessageBag());
+                throw new ECPayException('Composed Item Name can not more then 200 characters');
             }
         }
         $this->put('MerchantTradeNo', $this->attributes['OrderId'] ?? StringService::identifyNumberGenerator('O'));
