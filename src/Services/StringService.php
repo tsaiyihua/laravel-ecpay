@@ -1,17 +1,18 @@
 <?php
 namespace TsaiYiHua\ECPay\Services;
 
-use TsaiYiHua\ECPay\Checkout;
+use Exception;
 use TsaiYiHua\ECPay\Exceptions\ECPayException;
 
 class StringService
 {
     /**
      * Identify Number Generator
+     * @param string $prefix
      * @return string
      * @throws ECPayException
      */
-    static public function identifyNumberGenerator($prefix='A')
+    static public function identifyNumberGenerator(string $prefix='A'): string
     {
         if (strlen($prefix) > 2) {
             throw new ECPayException('ID prefix character maximum is 2 characters');
@@ -19,9 +20,9 @@ class StringService
         $intMsConst = 1000000;
         try {
             list($ms, $timestamp) = explode(" ", microtime());
-            $msString = (string) substr('000000'.($ms*$intMsConst), -6);
+            $msString = substr('000000'.($ms*$intMsConst), -6);
             return $prefix . $timestamp . $msString . substr('00'.random_int(0, 99),-2);
-        } catch (\Exception $e) {
+        } catch (Exception) {
             return $prefix . $timestamp . $msString . '00';
         }
     }
@@ -31,7 +32,7 @@ class StringService
      * @param array $hashData
      * @return string
      */
-    static public function checkMacValueGenerator($data, $hashData=[])
+    static public function checkMacValueGenerator(array $data, array $hashData=[]): string
     {
         if (empty($hashData)) {
             $hashData['key'] = config('ecpay.HashKey');
@@ -61,10 +62,11 @@ class StringService
 
     /**
      * 參數內特殊字元取代
-     * 傳入    $sParameters    參數
-     * 傳出    $sParameters    回傳取代後變數
+     * @param string $sParameters
+     * @return string
      */
-    static public function replaceSymbol($sParameters){
+    static public function replaceSymbol(string $sParameters): string
+    {
         if(!empty($sParameters)){
             $sParameters = str_replace('%2D', '-', $sParameters);
             $sParameters = str_replace('%2d', '-', $sParameters);
@@ -78,13 +80,16 @@ class StringService
             $sParameters = str_replace('%28', '(', $sParameters);
             $sParameters = str_replace('%29', ')', $sParameters);
         }
-        return $sParameters ;
+        return $sParameters;
     }
 
     /**
      * 自訂排序使用
+     * @param $a
+     * @param $b
+     * @return int
      */
-    private static function merchantSort($a,$b)
+    private static function merchantSort($a,$b): int
     {
         return strcasecmp($a, $b);
     }

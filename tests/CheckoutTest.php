@@ -2,10 +2,12 @@
 namespace TsaiYiHua\ECPay\Tests;
 
 use Illuminate\Support\Facades\Config;
+use Illuminate\View\View;
 use TsaiYiHua\ECPay\Checkout;
 use TsaiYiHua\ECPay\Collections\CheckoutPostCollection;
 use TsaiYiHua\ECPay\Constants\ECPayCarruerType;
 use TsaiYiHua\ECPay\Constants\ECPayDonation;
+use TsaiYiHua\ECPay\ECPay;
 use TsaiYiHua\ECPay\Exceptions\ECPayException;
 use TsaiYiHua\ECPay\Services\StringService;
 
@@ -113,6 +115,26 @@ test('set post data with invoice', function() {
     ];
     $postData = $this->checkout->setPostData($this->formData)->withInvoice($this->invoiceData)->getPostData();
     $this->assertEquals(ECPayCarruerType::None, $postData->get('CarruerType'));
+});
+
+test('set send post data', function() {
+    /** @var View $view */
+    $view = $this->checkout->setPostData($this->formData)->send();
+    $this->assertInstanceOf(View::class, $view);
+});
+
+test('set send post data with specified view via config', function() {
+    Config::set('ecpay.SendForm', 'ecpay::send');
+    /** @var View $view */
+    $view = $this->checkout->setPostData($this->formData)->send();
+    $this->assertInstanceOf(View::class, $view);
+});
+
+test('set send post data with specified view', function() {
+    ECPay::$sendForm = 'ecpay::send';
+    /** @var View $view */
+    $view = $this->checkout->setPostData($this->formData)->send();
+    $this->assertInstanceOf(View::class, $view);
 });
 
 test('set notify url', function() {

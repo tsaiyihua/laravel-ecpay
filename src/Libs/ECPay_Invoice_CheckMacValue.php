@@ -3,6 +3,7 @@ namespace TsaiYiHua\ECPay\Libs;
 
 
 use TsaiYiHua\ECPay\Constants\ECPayEncryptType;
+use TsaiYiHua\ECPay\Services\StringService;
 
 class ECPay_Invoice_CheckMacValue
 {
@@ -69,22 +70,7 @@ class ECPay_Invoice_CheckMacValue
      */
     static function Replace_Symbol($sParameters)
     {
-        if(!empty($sParameters)) {
-
-            $sParameters = str_replace('%2D', '-', $sParameters);
-            $sParameters = str_replace('%2d', '-', $sParameters);
-            $sParameters = str_replace('%5F', '_', $sParameters);
-            $sParameters = str_replace('%5f', '_', $sParameters);
-            $sParameters = str_replace('%2E', '.', $sParameters);
-            $sParameters = str_replace('%2e', '.', $sParameters);
-            $sParameters = str_replace('%21', '!', $sParameters);
-            $sParameters = str_replace('%2A', '*', $sParameters);
-            $sParameters = str_replace('%2a', '*', $sParameters);
-            $sParameters = str_replace('%28', '(', $sParameters);
-            $sParameters = str_replace('%29', ')', $sParameters);
-        }
-
-        return $sParameters ;
+        return StringService::replaceSymbol($sParameters);
     }
 
     /**
