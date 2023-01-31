@@ -1,3 +1,9 @@
+<p align="center">
+<a href="https://packagist.org/packages/tsaiyihua/laravel-ecpay"><img src="https://img.shields.io/packagist/dt/tsaiyihua/laravel-ecpay" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/tsaiyihua/laravel-ecpay"><img src="https://img.shields.io/packagist/v/tsaiyihua/laravel-ecpay" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/tsaiyihua/laravel-ecpay"><img src="https://img.shields.io/packagist/l/tsaiyihua/laravel-ecpay" alt="License"></a>
+</p>
+
 # Laravel ECPay
 Laravel ECPay 為串接綠界的非官方套件
 
