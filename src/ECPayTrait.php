@@ -67,6 +67,7 @@ trait ECPayTrait
      */
     public function getPostData()
     {
+        $this->setCheckCodeValue();
         return $this->postData;
     }
 
