@@ -65,8 +65,11 @@ trait ECPayTrait
      * Get Post Data
      * @return mixed
      */
-    public function getPostData()
+    public function getPostData(bool $withCheckCodeValue = false)
     {
+        if ($withCheckCodeValue) {
+            $this->setCheckCodeValue();
+        }
         return $this->postData;
     }
 
