@@ -7,7 +7,7 @@ use TsaiYiHua\ECPay\Collections\CheckoutResponseCollection;
 use TsaiYiHua\ECPay\Exceptions\ECPayException;
 use TsaiYiHua\ECPay\Services\StringService;
 
-//uses(TestCase::class)->in('.');
+uses(TestCase::class)->in('.');
 
 test('set checkout post collection - setBasicInfo fail', function() {
     $checkoutPostCollection = new CheckoutPostCollection();

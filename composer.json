@@ -5,11 +5,11 @@
     "keywords": ["payment", "ecpay", "laravel"],
     "require": {
         "php": ">=8.0",
-        "laravel/framework": "^9.0|^10.0"
+        "laravel/framework": "^9.0|^10.0|^11.0"
     },
     "require-dev": {
-        "pestphp/pest": "^1.22",
-        "orchestra/testbench": "^7.16"
+        "pestphp/pest": "^2.0",
+        "orchestra/testbench": "^7.0|^8.0|^9.0"
     },
     "license": "MIT",
     "authors": [
