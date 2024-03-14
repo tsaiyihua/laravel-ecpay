@@ -11,7 +11,7 @@ use TsaiYiHua\ECPay\ECPay;
 use TsaiYiHua\ECPay\Exceptions\ECPayException;
 use TsaiYiHua\ECPay\Services\StringService;
 
-uses(TestCase::class)->in('.');
+//uses(TestCase::class)->in('.');
 
 beforeEach(function () {
     /** @var TestCase $this */
