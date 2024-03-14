@@ -1,7 +1,6 @@
 <?php
 namespace TsaiYiHua\ECPay\Tests;
 
-use Illuminate\Support\Str;
 use TsaiYiHua\ECPay\Checkout;
 use TsaiYiHua\ECPay\ECPayServiceProvider;
 
