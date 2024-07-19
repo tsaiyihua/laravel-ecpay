@@ -34,8 +34,8 @@ ECPAY_HASH_IV=
 ECPAY_INVOICE_HASH_KEY=
 ECPAY_INVOICE_HASH_IV=
 ```
- - 金流測試用的參數值請參考介接文件 ecpay_gw_p110.pdf 第11頁。
- - 查詢發票用的參數請請參考介接文件 ecpay_004.pdf 第6頁。
+ - 金流測試用的參數值請參考介接文件 [ecpay_gw_p110.pdf](https://github.com/tsaiyihua/laravel-ecpay/blob/master/documents/ecpay_gw_p110.pdf) 第11頁。
+ - 查詢發票用的參數請請參考介接文件 [ecpay_004.pdf](https://github.com/tsaiyihua/laravel-ecpay/blob/master/documents/ecpay_004.pdf) 第6頁。
 
 ## 用法
 ### 基本用法
@@ -225,12 +225,12 @@ class InvoiceController extends Controller
  - 綠界科技全方位金流信用卡介接技術文件 (2021-08-19)
    - V 5.2.8
    - 文件編號 gw_p110
-   - 文件位置 documents/ecpay_gw_p110.pdf
+   - 文件位置 [documents/ecpay_gw_p110.pdf](https://github.com/tsaiyihua/laravel-ecpay/blob/master/documents/ecpay_gw_p110.pdf)
  - 綠界科技B2C電子發票介接技術文件 (2022-01-03)
    - V 3.6.4
    - 文件編號 gw_i100
-   - 文件位置 documents/ecpay_004.pdf
+   - 文件位置 [documents/ecpay_004.pdf](https://github.com/tsaiyihua/laravel-ecpay/blob/master/documents/ecpay_004.pdf)
  - 綠界科技全方位金流介接技術文件 (2021-11-30)
    - V 5.3.11
    - 文件編號 gw_p100
-   - 文件位置 documents/ecpay_011.pdf
+   - 文件位置 [documents/ecpay_011.pdf](https://github.com/tsaiyihua/laravel-ecpay/blob/master/documents/ecpay_011.pdf)
