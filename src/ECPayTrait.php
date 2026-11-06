@@ -53,7 +53,6 @@ trait ECPayTrait
         // 回傳參數
         $response = curl_exec($ch);
         $httpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
         if ($httpStatus == 200) {
             return $this->parseResponse($response);
         } else {

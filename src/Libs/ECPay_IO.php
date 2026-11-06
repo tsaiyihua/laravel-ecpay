@@ -41,8 +41,6 @@ class ECPay_IO
             throw new Exception(curl_error($ch), curl_errno($ch));
         }
 
-        curl_close($ch);
-
         return $rs;
     }
 }
